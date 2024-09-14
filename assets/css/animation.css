@@ -1,0 +1,15 @@
+ 
+/* 
+@keyframes animate-cont {
+    from{
+        top: 0;
+    }
+    to{
+        top:0;
+    }
+}
+.row-4-charts{
+    animation-name:animate-cont ;   
+    animation-delay:2s ; 
+    animation-duration: 3s;
+} */

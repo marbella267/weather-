@@ -1,0 +1,326 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+:root  {
+  --bodyColor: #5c9ce5;
+  --rightSideColor: white;
+  --whiteColor: white;
+  --progressBarColor:#5c9ce5;
+  --progressColor:#E9ECEFff ;
+  --btn-nextday : #F0F0F0ff ;
+  
+}
+:root .dark{
+  --bodyColor:#46494e;
+  --rightSideColor: #282828;
+  --whiteColor:#303338;
+  --progressBarColor:#abc7f1 ;
+  --progressColor:#1b1e24;
+  --btn-nextday : var(--bodyColor) ;
+  color: white;
+  .btn-nextday{
+    color: white;
+  }
+  .mode-dark span{
+    color: #F6CB43ff;
+  }
+}
+ 
+.parent {
+  display: grid;
+  grid-template-columns: 1.2fr 3fr;
+  background-color: var(--bodyColor);
+}
+
+.leftSide {
+  position: sticky;
+  top:0 ;
+  bottom: 0;
+  overflow: clip;
+  display: grid;
+  grid-template-rows: repeat(3, max-content);
+  row-gap: 2rem;
+  padding: 1rem 2rem 0 2rem;
+  height: 100vh;
+}
+ 
+form {
+  width: 100%;
+  display: flex;
+  margin-top: 0.8rem;
+  justify-content: space-between;
+}
+#search-btn {
+  color: gray;
+  font-size: larger;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+.input {
+  outline: none;
+  border: none;
+  width: 100%;
+}
+.input-con {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  position: relative;
+  padding: 0rem 1rem 0.3rem 1rem;
+  border-radius: 1rem;
+  background-color: white;
+  border: 1px solid rgba(128, 128, 128, 0);
+  transition: 5ms ease-in-out;
+  height: 41.6px;
+  width: 80%;
+}
+
+.input-con:focus {
+  outline: none;
+  border: 2px solid rgba(114, 114, 114, 0.233);
+}
+.input-con button{
+  justify-self:  end;
+}
+.switch {
+  margin: 0.4rem 0 0 1rem;
+  width: 20%;
+  text-align: end;
+}
+.switch button {
+  background-color: rgba(255, 255, 255, 0);
+  border: none;
+  cursor: pointer;
+}
+.switch span {
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.575);
+  text-align: center;
+   
+}
+.switch .active {
+  color: white;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100px;
+  color: white;
+  font-weight: 100;
+  font-size: 1.5rem;
+  letter-spacing: 0.05rem;
+}
+/* .flex1{
+    width: 500px;
+} */
+.content p {
+  margin: 0.8rem 0;
+}
+.content .city {
+  margin: 0;
+}
+.content .date {
+  font-size: small;
+}
+
+.sunrise,
+.sunset {
+  width: min-content;
+  text-align: end;
+  display: flex;
+}
+.sun {
+  margin: 0 0.5rem;
+  width: 20%;
+  height: 20%;
+  align-self: center;
+  filter: brightness(0) invert(1);
+}
+.sunset .sun {
+  height: 30%;
+  width: 25%;
+}
+.carousel {
+  width: 300px;
+}
+.temp,
+.temp-desc {
+  color: white;
+  margin-top: 0.5rem;
+  margin-left: -1rem;
+}
+
+.temp {
+  font-size: 6rem;
+  margin-left: 2rem;
+}
+.carousel{
+  justify-self: center;
+}
+.carousel-item {
+  text-align: center;
+}
+.temp-img {
+  justify-self: center;
+}
+
+/* styling the right section */
+
+.rightSide {
+  position: relative;
+  width: 100%;
+  border-top-left-radius: 2.5rem;
+  border-bottom-left-radius: 2.5rem;
+  background-color: var(--rightSideColor);
+  padding: 2rem 2rem 2rem 3rem;
+  display: grid;
+  grid-template-rows: repeat(4, max-content);
+  grid-template-columns: 1fr;
+}
+.row-4-charts {
+  align-self: self-end;
+  position: relative;
+}
+.charts-container {
+  margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2,max-content);
+  gap: 2rem 2rem;
+}
+.charts-container .sm-card {
+  display: flex;
+  padding: 1rem 7% 0.5rem 7%;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: var(--whiteColor);
+  border-radius: 1.9rem;
+  height: 100%;
+}
+.sm-card .card-head {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 400;
+  text-transform: capitalize;
+}
+
+.sm-card .icon-container {
+  background-color:var(--bodyColor);
+  border-radius: 0.5rem;
+  text-align: center;
+  color: var(--whiteColor);
+  width: 40px;
+  height: 35px;
+}
+.icon-container img {
+  width: 25px;
+  height: 90%;
+  margin-top: 0.1rem;
+  filter: brightness(0) invert(1);
+}
+.sm-card .value {
+  font-weight: bolder;
+  text-align: center;
+  font-size: large;
+}
+.graph {
+  height: max-content;
+  background-color: var(--whiteColor);
+  border-radius: 1rem;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  padding: 1rem 1.5rem;
+  position: relative;
+}
+#myChart{
+  width: 100%;
+}
+.graph-head {
+  display: flex;
+  justify-content: space-between;
+}
+.btn-nextday {
+  border: none;
+  width: max-content;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  font-size: medium;
+  background-color: var(--btn-nextday);
+}
+.graph-head .p {
+  align-self: center;
+}
+
+.graph {
+  height: max-content;
+  width: 99.9%;
+  --chartColor: var(--progressBarColor)
+}
+ 
+ 
+.progress-grid-3{
+  display: grid; 
+  grid-template-columns: repeat(3,auto);
+  column-gap: 1rem;
+  margin: 1rem 0;
+}
+.progress-grid-5{
+  display: grid; 
+  grid-template-columns: repeat(5,auto);
+  column-gap: 1rem;
+  margin: 1rem 0;
+}
+.progress_con{
+  display: flex;
+  flex-direction: column;
+}
+.progress-bar{
+  background-color: var(--progressBarColor);
+}
+.progress{
+  height: .8rem;
+  background-color:var(--progressColor);
+}
+p{
+  margin-bottom:.3rem ;
+}
+.text-muted{
+  text-align: center;
+  font-size: small;
+}
+.mode-white{
+  background-color: var(--bodyColor);
+  border: none;
+  width: 3rem;
+  border-radius:1rem;
+  text-align: start;
+  padding:0 .5rem;
+  position: absolute;
+  right: 2rem;
+  top:2rem; 
+}
+.mode-dark{
+  background-color: var(--bodyColor);
+  border: none;
+  width: 3rem;
+  border-radius:1rem;
+  text-align: end;
+  padding:0 .1rem;
+  position: absolute;
+  right: 2rem;
+  top:2rem; 
+}
+.mode-icon{
+  position: relative;
+  color:var(--whiteColor) ;
+}
+ 
+ 
