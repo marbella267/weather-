@@ -83,8 +83,14 @@
           display: grid;
           grid-template-columns: auto;
         }
+        .sec-item{
+          font-weight: bolder;
+        }
+        .date{
+          font-weight: bolder;
+        }
         .carousel{
-          width: min-content;
+          width: 250px;
         }
         .content{
           font-size: 1rem;
