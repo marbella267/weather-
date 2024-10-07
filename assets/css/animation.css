@@ -1,15 +1,34 @@
- 
-/* 
-@keyframes animate-cont {
+@keyframes rightSide {
     from{
-        top: 0;
+      bottom:-100%;
+    }25%{
+      bottom: -75%;
+    }50%{
+      bottom: -50%;
+    }75%{
+      bottom: -25%;
     }
     to{
-        top:0;
+      bottom: 0;
     }
-}
-.row-4-charts{
-    animation-name:animate-cont ;   
-    animation-delay:2s ; 
-    animation-duration: 3s;
-} */
+  }
+ 
+  @keyframes leftSide {
+    from{
+      position: relative;
+      left:-100%;
+    } 
+    50%{
+      position: relative;
+      left:-50%;
+  
+    }
+    75%{
+      position: relative;
+      left: -25%;
+    }
+    to{
+      left: 0;
+      position: sticky;
+    }
+  }

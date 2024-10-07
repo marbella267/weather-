@@ -1,127 +1,127 @@
- 
-
-var hoursData = ["11:00", " 12:00", "13:00", "14:00", "15:00", "16:00"] ;
 let ctx = document.getElementById("myChart");
-const temp_icons = {
-  'sunny':'<i class="fa-regular fa-sun"></i>',
-  'cloud':'<i class="fa-solid fa-cloud"></i>',
-}
-let temp_info = document.getElementById('temp-info') ;
+let canvasContainer = document.querySelector(".can-con");
+// building the structure(elements) above the chart
 
-const build_info = (temps,condition)=>{
+let temp_info = document.getElementById("temp-info");
+const build_info = (length = 23) => {
+  let fragment = document.createDocumentFragment();
+  temp_info.style.marginLeft = ".5rem";
+  temp_info.style.display = "grid";
+  temp_info.style.gridTemplateColumns = `repeat(${length}, auto)`;
 
-  temp_info.style.marginLeft = '.5rem'
-  temp_info.style.display = 'grid' ;
-  temp_info.style.gridTemplateColumns  = `repeat(${temps.length}, auto)`;
+  for (let i = 0; i < length; i++) {
+    let div = document.createElement("div");
+    div.setAttribute("class", "tempIconCon");
+    div.style.width = `${939 / 9 - 14}px`;
+    div.style.fontWeight = "bold";
 
-  for(let i = 0 ; i<temps.length;i++){
+    let p = document.createElement("p");
+    p.setAttribute("class", "info-temp");
 
-  let div =  document.createElement('div') ;
-  temp_info.appendChild(div) ;
-  div.style.fontWeight = 'bold'
+    let img = document.createElement("img");
+    img.setAttribute("class", "frocastTempIcon");
 
-  div.style.width = `${(ctx.getBoundingClientRect().width/5)-14}px`
-  if(i ==temps.length-1){
-    div.style.width = 'auto'
+    div.appendChild(p);
+    div.appendChild(img);
+
+    if (i == length - 1) {
+      div.style.width = "auto";
+    }
+
+    fragment.appendChild(div);
   }
-  let key = condition[i]
-  let icon = temp_icons[`${key}`];
-  
-  div.innerHTML = `<p >${temps[i]}</p>
-  <p style=color:${key=='cloud'?'#7FA1C3':'#f1c232'};>${icon}</p>` ;
+  temp_info.appendChild(fragment);
+};
+
+build_info();
+
+let paragraphTemps = document.querySelectorAll(".info-temp");
+let iconsElement = document.querySelectorAll(".frocastTempIcon");
+
+// felling the graph with data
+const addDataToGraph = (temps, icons) => {
+  for (let i = 0; i < temps.length; i++) {
+    paragraphTemps[i].innerHTML = temps[i] + "°";
+    iconsElement[i].setAttribute("src", `https:${icons[i]}`);
   }
-  
-}
-let temp = [20, 19, 20, 27, 23, 32]
-let condition = ['cloud','sunny','sunny','cloud','cloud','sunny']
+  document.querySelector(".can-con").style.width = `${temp_info.clientWidth}`;
+};
 
-build_info(temp,condition)
-
- 
-
-var config = 
-{
- 
+// building the chart
+var config = {
   type: "line",
   data: {
-    labels:hoursData , 
+    labels: [],
     datasets: [
       {
- 
-        data: [20, 19, 20, 27, 23, 32],
+        data: [],
         borderWidth: 1,
         borderColor: ["#abc7f1 "],
         fill: true,
-        // backgroundColor:' rgba(175, 173, 173, 0.413)'
-      } 
+        backgroundColor: " rgba(175, 173, 173, 0.413)",
+      },
     ],
-    
   },
   options: {
     elements: {
-      point:{
-          radius: 0
-      }
-  },
- 
+      point: {
+        radius: 0,
+      },
+    },
+
     maintainAspectRatio: false,
-    
-    responsive: true,
     scales: {
       y: {
         beginAtZero: true,
         display: false,
         grid: { drawOnChartArea: false },
-        stacked:true
+        stacked: true,
       },
       x: {
         grid: {
           drawOnChartArea: false,
         },
-        stacked:true,
-        ticks:{
-          stepSize : 1 
-        }
-      },  
+
+        stacked: true,
+        ticks: {
+          stepSize: 1,
+        },
+      },
     },
 
     plugins: {
       legend: {
         display: false,
       },
-    }
-    ,
-    
+    },
   },
-  plugins: [{
+  plugins: [
+    {
       afterDraw: function (chart) {
-          const ctx = chart.ctx;
-          const xAxis = chart.scales.x;
-          // Draw vertical line at x-axis value 4
-           
-          for(let i = 0 ; i<hoursData.length;i++){
+        const ctx = chart.ctx;
+        const xAxis = chart.scales.x;
+        // Draw vertical line at x-axis value 4
+
+        for (let i = 0; i < config.data.labels.length; i++) {
           var xValue = xAxis.getPixelForValue(i);
           ctx.save();
-          ctx.strokeStyle = 'black';
-          ctx.lineWidth = .5;
+          ctx.strokeStyle = "black";
+          ctx.lineWidth = 0.5;
           ctx.beginPath();
-          ctx.moveTo(xValue,  10);
-          ctx.lineTo(xValue, chart.height-30);
+          ctx.moveTo(xValue, 0);
+          ctx.lineTo(xValue, chart.height - 30);
           ctx.stroke();
           ctx.restore();
-          };
-          
-      }
-  }]
+        }
+      },
+    },
+  ],
+};
+
+const myChart = new Chart(ctx, config);
+
+function build_chart(temps, hours) {
+  config.data.labels = hours;
+  config.data.datasets[0].data = temps;
+  myChart.update();
 }
- 
- 
-
-
-
- 
- 
-
-
-
- 
