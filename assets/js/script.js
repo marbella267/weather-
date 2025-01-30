@@ -1,23 +1,23 @@
 //for the first calling in the website
-let form = document.querySelector(".form2");
-let input2 = document.querySelector(".input-con2 input");
-let inputCon2 = document.querySelector(".input-con2");
+// let form = document.querySelector(".form2");
+// let input2 = document.querySelector(".input-con2 input");
+// let inputCon2 = document.querySelector(".input-con2");
 
-input2.addEventListener("input", () => {
-  form.classList.add("formFocus");
-});
+// input2.addEventListener("input", () => {
+//   form.classList.add("formFocus");
+// });
 
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  form.classList.remove("formFocus");
-  if (inputCon2.children[0].value != "") {
-    fetchData(inputCon2.children[0].value, alertEle2, btnSearch2, spinner2, true);
-  }
-});
+// form.addEventListener("submit", (e) => {
+//   e.preventDefault();
+//   form.classList.remove("formFocus");
+//   if (inputCon2.children[0].value != "") {
+//     fetchData(inputCon2.children[0].value, alertEle2, btnSearch2, spinner2, true);
+//   }
+// });
 
-inputCon2.children[0].addEventListener("focus", () => {
-  form.classList.add("formFocus");
-});
+// inputCon2.children[0].addEventListener("focus", () => {
+//   form.classList.add("formFocus");
+// });
 
 // display all the data at the first section
 const displayInfo = (data) => {
