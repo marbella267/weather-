@@ -1,34 +1,22 @@
 @keyframes rightSide {
     from{
-      bottom:-100%;
-    }25%{
-      bottom: -75%;
-    }50%{
-      bottom: -50%;
-    }75%{
-      bottom: -25%;
-    }
+      overflow-y: hidden;
+      transform: translateY(100%);
+        
+    } 
     to{
-      bottom: 0;
+      overflow-y: hidden;
+      transform: translateY(0);
     }
   }
  
   @keyframes leftSide {
     from{
-      position: relative;
-      left:-100%;
+      transform: translateX(-100%);
     } 
-    50%{
-      position: relative;
-      left:-50%;
-  
-    }
-    75%{
-      position: relative;
-      left: -25%;
-    }
+     
     to{
-      left: 0;
-      position: sticky;
+      transform: translateX(0);
+       
     }
   }

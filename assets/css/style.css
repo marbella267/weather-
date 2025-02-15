@@ -326,6 +326,7 @@ box-sizing: border-box;
 
 .rightSide {
   position: relative;
+  z-index: 3;
   width: 100%;
   border-top-left-radius: 2.5rem;
   border-bottom-left-radius: 2.5rem;

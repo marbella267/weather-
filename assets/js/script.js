@@ -1,3 +1,213 @@
+let ctx = document.getElementById("myChart");
+let canvasContainer = document.querySelector(".can-con");
+// building the structure(elements) above the chart
+
+let temp_info = document.getElementById("temp-info");
+const build_info = (length = 23) => {
+  let fragment = document.createDocumentFragment();
+  temp_info.style.marginLeft = ".5rem";
+  temp_info.style.display = "grid";
+  temp_info.style.gridTemplateColumns = `repeat(${length}, auto)`;
+
+  for (let i = 0; i < length; i++) {
+    let div = document.createElement("div");
+    div.setAttribute("class", "tempIconCon");
+    div.style.width = `${939 / 9 - 14}px`;
+    div.style.fontWeight = "bold";
+
+    let p = document.createElement("p");
+    p.setAttribute("class", "info-temp");
+
+    let img = document.createElement("img");
+    img.setAttribute("class", "frocastTempIcon");
+    img.alt = "icon description of the wheather"    
+ 
+ 
+    div.appendChild(p);
+    div.appendChild(img);
+
+    if (i == length - 1) {
+      div.style.width = "auto";
+    }
+
+    fragment.appendChild(div);
+  }
+  temp_info.appendChild(fragment);
+};
+
+build_info();
+
+let paragraphTemps = document.querySelectorAll(".info-temp");
+let iconsElement = document.querySelectorAll(".frocastTempIcon");
+
+// felling the graph with data
+const addDataToGraph = (temps, icons) => {
+  for (let i = 0; i < temps.length; i++) {
+    paragraphTemps[i].innerHTML = temps[i] + "°";
+    iconsElement[i].setAttribute("src", `https:${icons[i]}`);
+    
+  }
+  document.querySelector(".can-con").style.width = `${temp_info.clientWidth}`;
+};
+
+// building the chart
+var config = {
+  type: "line",
+  data: {
+    labels: [],
+    datasets: [
+      {
+        data: [],
+        borderWidth: 1,
+        borderColor: ["#abc7f1 "],
+        fill: true,
+        backgroundColor: " rgba(175, 173, 173, 0.413)",
+      },
+    ],
+  },
+  options: {
+    elements: {
+      point: {
+        radius: 0,
+      },
+    },
+
+    maintainAspectRatio: false,
+    scales: {
+      y: {
+        beginAtZero: true,
+        display: false,
+        grid: { drawOnChartArea: false },
+        stacked: true,
+      },
+      x: {
+        grid: {
+          drawOnChartArea: false,
+        },
+
+        stacked: true,
+        ticks: {
+          stepSize: 1,
+        },
+      },
+    },
+
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+  },
+  plugins: [
+    {
+      afterDraw: function (chart) {
+        const ctx = chart.ctx;
+        const xAxis = chart.scales.x;
+        // Draw vertical line at x-axis value 4
+
+        for (let i = 0; i < config.data.labels.length; i++) {
+          var xValue = xAxis.getPixelForValue(i);
+          ctx.save();
+          ctx.strokeStyle = "black";
+          ctx.lineWidth = 0.5;
+          ctx.beginPath();
+          ctx.moveTo(xValue, 0);
+          ctx.lineTo(xValue, chart.height - 30);
+          ctx.stroke();
+          ctx.restore();
+        }
+      },
+    },
+  ],
+};
+
+const myChart = new Chart(ctx, config);
+
+function build_chart(temps, hours) {
+  config.data.labels = hours;
+  config.data.datasets[0].data = temps;
+  myChart.update();
+}
+//variables
+let Form = document.querySelector('.form')
+let alertEle = document.querySelector('#alert1')
+let alertEle2 = document.querySelector('#alert2')
+let nextBtn = document.querySelector('#btn-nextday')
+let prevBtn = document.querySelector('#btn-prevday')
+let spinner = document.querySelector('#spinner1')
+let spinner2 = document.querySelector('#spinner2')
+let btnSearch =  document.querySelector('#search-btn')
+let btnSearch2 = document.querySelector('#search-btn2')
+var data = ''
+let cityInput = ''
+let btnMode = document.getElementById("mode");
+let parent = document.getElementById("parent");
+let icon = document.getElementById("mode-icon");
+let inputCon = document.querySelector(".input-con");
+let sunris = document.querySelector(".sunrise p");
+let sunset = document.querySelector(".sunset  p");
+let currentTemp = document.querySelector(".current-temp .temp");
+let maxTemp = document.querySelector(".max-temp .temp");
+let minTemp = document.querySelector(".min-temp .temp");
+let imgTemp = document.querySelector(".temp-img img");
+let feelsLikeEle = document.querySelector(".feels-like .value")
+let feelsLikeProgress = document.querySelector(".feels-like .progress-bar")
+let rainProgress = document.querySelector(".channce-of-rain .progress-bar")
+let rainValue= document.querySelector(".channce-of-rain .value")
+let precipProgress=document.querySelector(".precip .progress-bar")
+let precipValue=document.querySelector(".precip .value")
+let humValue = document.querySelector(".hum .value")
+let humProgress = document.querySelectorAll(
+  ".hum .progress-grid-3 .progress-bar"
+);
+let windValue = document.querySelector('.card-wind-content .wind-value')
+let windDirection = document.querySelector('.card-wind-content .wind-direction')
+let uvIndexProgress = document.querySelectorAll(".uv-index .progress-bar");
+let uvDesc = document.querySelector(".uv-index .uv-desc")
+let date = document.querySelector('.date')
+let imgTempObject = {
+  'clear': "./assets/images/Clear.png",
+  'sunny': "./assets/images/Clear.png",
+  'mist': "./assets/images/Mist.png",
+  'cloudy': "./assets/images/Clouds.png",
+  "partlycloudy": "./assets/images/Mist.png",
+  'overcast':"./assets/images/Clouds.png",
+  "patchyrainnearby": "./assets/images/drizzle.png",
+  'thunderyoutbreaksinnearby':'./assets/images/drizzle.png',
+  'moderaterain':'./assets/images/Rain.png'
+};
+ 
+localStorage.setItem('measure','c')
+ 
+
+const months = [
+  "Jan",
+  "Feb",
+  "March",
+  "Apr",
+  "May",
+  "Jun",
+  "July",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+// let localTime = new Date()
+ 
+var data = ''
+
+
+const days = ["Sun", "Mon", "Tus", "Wen", "Thur", "Fri", "Sut"];
+var countNext = 0;
+var requiredDate = ''
+var time = ''
+var timeMonth = ''
+var timeDay = ''
+var currentTime = new Date();
+ 
+
 //for the first calling in the website
 // let form = document.querySelector(".form2");
 // let input2 = document.querySelector(".input-con2 input");
@@ -20,6 +230,7 @@
 // });
 
 // display all the data at the first section
+ 
 const displayInfo = (data) => {
   date.innerHTML = data.date;
   document.querySelector(".city").textContent = `${data.name}, ${data.country}`;
@@ -315,3 +526,164 @@ function handleMeasure(measure) {
   }
 }
 handleMeasure(localStorage.getItem("measure"));
+
+
+function btnRemoveLoading(btn){
+  btn.removeAttribute('disabled')
+  document.querySelector(`#${btn.id} .spinner`).classList.add('hide')
+  document.querySelector(`#${btn.id} .icon`).classList.remove('hide')
+} 
+
+function btnAddLoading(btn){
+  btn.setAttribute('disabled','true')
+  document.querySelector(`#${btn.id} .spinner`).classList.remove('hide')
+  document.querySelector(`#${btn.id} .icon`).classList.add('hide')
+}
+
+async function fetchForcastData(fn,btn) {
+  try{  
+    btnAddLoading(btn)
+    let getData = await fetch(
+      `https://api.weatherapi.com/v1/forecast.json?q=${data.location.name}&key=c506e5f0923840aaaee104416243008&dt=${requiredDate}`
+    );
+    if(!getData.ok){
+     btnRemoveLoading(btn)
+      console.log('something wrong')
+    }
+    else{
+    fn()
+    
+    let response = await getData.json();
+    data = response;
+    //check if the forecast array aren't empty
+    if(data.forecast.forecastday.length!=0){
+    var forcast = data.forecast.forecastday[0].hour;
+    var measure = localStorage.getItem("measure");
+    var forcastData = getForcastData(forcast, measure);
+    addDataToGraph(forcastData.temps, forcastData.icons);
+    build_chart(forcastData.temps, forcastData.hours);
+    let currentDay =  currentTime.getDate() == timeDay
+    let feelslike ;
+    let day = ""; 
+    let currentTemp = '';
+    let uv = '';
+    let hum = '' ;
+    let wind = '';
+    let windDir = ''
+    //handle data of the current day 
+    if(currentDay){
+      day = `today ${timeMonth} ${timeDay}` 
+      currentTemp = Math.round(data.current[`temp_${measure}`])
+      feelslike = data.current[`feelslike_${measure}`]
+      uv = data.current.uv
+      hum = data.current.humidity
+      wind= data.current.wind_kph
+      windDir = data.current.wind_dir
+    }else{
+      day = `${days[time.getDay()]}, ${timeMonth} ${timeDay}`
+      currentTemp = Math.round(data.forecast.forecastday[0].day[`avgtemp_${measure}`])
+      feelslike = data.forecast.forecastday[0].day[`avgtemp_${measure}`]
+      uv = data.forecast.forecastday[0].day.uv
+      hum = data.forecast.forecastday[0].day.avghumidity
+      wind = data.forecast.forecastday[0].day.maxwind_kph
+      windDir = data.forecast.forecastday[0].hour[0].wind_dir
+      
+    }
+          
+    displayInfo({
+      sunrise: data.forecast.forecastday[0].astro.sunrise,
+      sunset: data.forecast.forecastday[0].astro.sunset,
+      name: data.location.name,
+      country:
+        data.location.country == "United States of America"
+          ? "US"
+          : data.location.country,
+      currentTemp: currentTemp,
+      maxTemp: Math.round(
+        data.forecast.forecastday[0].day[`maxtemp_${measure}`]
+      ),
+      minTemp: Math.round(
+        data.forecast.forecastday[0].day[`mintemp_${measure}`]
+      ),
+      img: data.forecast.forecastday[0].day.condition.text.toLowerCase().replace(/\s+/g, ''),
+      tempIcon: data.forecast.forecastday[0].day.condition.icon,
+      imgDesc:data.forecast.forecastday[0].day.condition.text,
+      date: `${day}`,
+    });
+ 
+    changeChartsData([
+      hum,
+      data.forecast.forecastday[0].day.totalprecip_mm,
+      data.forecast.forecastday[0].day.daily_chance_of_rain,
+      feelslike,
+      uv,
+      wind,
+      windDir
+    ])
+    btnRemoveLoading(btn)
+    }else{
+      btnRemoveLoading(btn)
+      console.log("can't get more")
+    }
+  } 
+   
+  }catch(error){
+  btn.removeAttribute('disabled')
+  document.querySelector(`#${btn.id} .spinner`).classList.add('hide')
+  document.querySelector(`#${btn.id} .icon`).classList.remove('hide')
+  console.log('network error')
+ 
+}
+}
+
+nextBtn.addEventListener("click", () => {
+ 
+if (data.forecast.forecastday[0].hour) {
+    let requiredDateSec =
+    data.forecast.forecastday[0].date_epoch + 24 * 60 * 60;
+    time = new Date(requiredDateSec * 1000);
+    timeDay = time.getDate();
+    timeMonth = months[time.getMonth()];
+
+    requiredDate = `${time.getFullYear()}-${
+      time.getMonth() + 1
+    }-${timeDay}`;
+    function handleBtn(){
+      countNext += 1;
+      nextBtn.dataset.clicked = countNext;
+      prevBtn.classList.remove("hide");
+    }
+    fetchForcastData(handleBtn,nextBtn);
+  
+    
+if (countNext == 14) {
+    nextBtn.classList.add("hide");
+  }
+}else{
+  console.log('cnat go next')
+}
+});
+
+prevBtn.addEventListener("click", () => {
+  if (data.forecast.forecastday[0].hour) {
+    
+    let requiredDateSec =data.forecast.forecastday[0].date_epoch - 24 * 60 * 60;
+    time = new Date(requiredDateSec * 1000);
+    timeDay = time.getDate();
+    timeMonth = months[time.getMonth()];
+    if(currentTime.getDate()==timeDay){
+      prevBtn.classList.add('hide')
+    } 
+
+    requiredDate = `${time.getFullYear()}-${
+      time.getMonth() + 1
+    }-${timeDay}`;
+    function handleBtn(){
+      countNext -= 1;
+      nextBtn.dataset.clicked = countNext;
+      nextBtn.classList.remove("hide");
+    }
+    fetchForcastData(handleBtn,prevBtn);
+  }
+});
+ 
